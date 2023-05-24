@@ -1,78 +1,67 @@
 package com.ing.zoo;
 
-import java.sql.SQLOutput;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Zoo {
-    public static void main(String[] args)
-    {
-        String[] commands = new String[4];
-        commands[0] = "hello";
-        commands[1] = "give leaves";
-        commands[2] = "give meat";
-        commands[3] = "perform trick";
+    public static void main(String[] args) {
+        Map<String, Animal> animals = new HashMap<>();
+        animals.put("henk", new Lion("Henk", "", ""));
+        animals.put("elsa", new Hippo("Elsa", "", ""));
+        animals.put("dora", new Pig("Dora","",""));
+        animals.put("wally", new Tiger("Wally","","",""));
+        animals.put("marty", new Zebra("Marty","","",""));
 
-        Lion henk = new Lion("Henk", "", "");
-        Hippo elsa = new Hippo("Elsa", "", "");
-        Pig dora = new Pig("Dora", "", "");
-        Tiger wally = new Tiger("Wally", "", "", "");
-        Zebra marty = new Zebra("Marty", "", "", "");
+        //adding values to keys, for each command I add a method
+        Map<String, String> commands = new HashMap<>();
+        commands.put("hello", "sayHello");
+        commands.put("give leaves", "eatLeaves");
+        commands.put("give meat", "eatMeat");
+        commands.put("perform trick", "performTrick");
 
-        System.out.println("Welcome to the Zoo app! There are multiple animals with different names. You can feed the animals, greet them and make them do tricks!");
+        System.out.println("Welcome to the Zoo app! There are multiple animals with different names. You can feed the animals, greet them, and make them do tricks!");
         Scanner scanner = new Scanner(System.in);
+
         String input;
 
-        while(true){
-
+        while (true) {
             input = scanner.nextLine();
 
-            if (input.equals(commands[0] + " henk")) {
-                henk.sayHello();
-            }
-            else if (input.equals(commands[2] + " henk")) {
-                henk.eatMeat();
-            }
-            else if (input.equals(commands[0] + " elsa")) {
-                elsa.sayHello();
-            }
-            else if (input.equals(commands[1] + " elsa")) {
-                elsa.eatLeaves();
-            }
-            else if (input.equals(commands[0] + " dora")) {
-                dora.sayHello();
-            }
-            else if (input.equals(commands[1] + " dora")) {
-                dora.eatLeaves();
-            }
-            else if (input.equals(commands[2] + " dora")) {
-                dora.eatMeat();
-            }
-            else if (input.equals(commands[3] + " dora")) {
-                dora.performTrick();
-            }
-            else if (input.equals(commands[0] + " wally")) {
-                wally.sayHello();
-            }
-            else if (input.equals(commands[2] + " wally")) {
-                wally.eatMeat();
-            }
-            else if (input.equals(commands[3] + " wally")) {
-                wally.performTrick();
-            }
-            else if (input.equals(commands[0] + " marty")) {
-                marty.sayHello();
-            }
-            else if (input.equals(commands[1] + " marty")) {
-                marty.eatLeaves();
-            }
-            else if (input.equals(commands[3] + " marty")) {
-                marty.performTrick();
-            }
-            else if(input.equalsIgnoreCase("exit")){
+            if (input.equalsIgnoreCase("exit")) {
                 break;
             }
-            else {
+
+            //splits the 2 words, that each get an index, 1 and 0. It checks if there are 2 words to validate here.
+            String[] parts = input.split(" ");
+            if (parts.length != 2) {
                 System.out.println("Unknown command: " + input);
+                continue;
+            }
+
+            //annoying that the commands from the array cannot be recognised, so I force both the name and command to have no capital letters
+            String command = parts[0].toLowerCase();
+            String animalName = parts[1].toLowerCase();
+
+            //so from the animal map, we compare the animalName String we used as input. we check if it is on the list and if it is not, we give an error
+            Animal animal = animals.get(animalName);
+            if (animal == null) {
+                System.out.println("Unknown animal: " + animalName);
+                continue;
+            }
+
+            //does the same thing but for the command map
+            String methodName = commands.get(command);
+            if (methodName == null) {
+                System.out.println("Unknown command: " + command);
+                continue;
+            }
+
+            //try tests the errors, catch executes. We test if there is a method in the given animal class that coorelates with the command
+            try {
+                animal.getClass().getMethod(methodName).invoke(animal);
+            } catch (Exception e) {
+                System.out.println("Failed to execute command: " + command);
             }
         }
 
