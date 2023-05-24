@@ -4,21 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * @author milosmihajlovic
+ */
+
 public class Zoo {
     public static void main(String[] args) {
         Map<String, Animal> animals = new HashMap<>();
         animals.put("henk", new Lion("Henk", "", ""));
         animals.put("elsa", new Hippo("Elsa", "", ""));
-        animals.put("dora", new Pig("Dora","",""));
+        animals.put("dora", new Pig("Dora","","", ""));
         animals.put("wally", new Tiger("Wally","","",""));
         animals.put("marty", new Zebra("Marty","","",""));
 
         //adding keys to values, for each command I add a method
         Map<String, String> commands = new HashMap<>();
         commands.put("hello", "sayHello");
-        commands.put("give leaves", "eatLeaves");
-        commands.put("give meat", "eatMeat");
-        commands.put("perform trick", "performTrick");
+        commands.put("give_leaves", "eatLeaves");
+        commands.put("give_meat", "eatMeat");
+        commands.put("perform_trick", "performTrick");
 
         System.out.println("Welcome to the Zoo app! There are multiple animals with different names. You can feed the animals, greet them, and make them do tricks!");
         Scanner scanner = new Scanner(System.in);

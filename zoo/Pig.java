@@ -5,9 +5,10 @@ import java.util.Random;
 public class Pig extends Animal{
     public String trick;
 
-    public Pig(String name, String helloText, String eatText)
+    public Pig(String name, String helloText, String eatText, String trick)
     {
         super(name, helloText, eatText);
+        this.trick = trick;
     }
 
     public void sayHello()
