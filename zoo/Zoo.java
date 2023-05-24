@@ -13,7 +13,7 @@ public class Zoo {
         animals.put("wally", new Tiger("Wally","","",""));
         animals.put("marty", new Zebra("Marty","","",""));
 
-        //adding values to keys, for each command I add a method
+        //adding keys to values, for each command I add a method
         Map<String, String> commands = new HashMap<>();
         commands.put("hello", "sayHello");
         commands.put("give leaves", "eatLeaves");
